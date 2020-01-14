@@ -3,6 +3,7 @@ package com.dd.api.api;
 import com.dd.api.entity.commom.result.TradeHistory;
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -23,6 +24,7 @@ public interface MarketApi {
      *                 七种类型，分别代表1-30分钟，1小时，1日，1周
      * @param dataSize 返回 K 线数据条数,[1,100]
      */
+    @Headers({"url_name:kline"})
     @GET("https://kline.zbg.com/api/data/v1/klines")
     Call<List<List<String>>> getKlines(@Query("marketName") String symbol, @Query("type") String type, @Query("dataSize") Integer dataSize);
 
@@ -31,6 +33,7 @@ public interface MarketApi {
      *
      * @param symbol 交易对名称
      */
+    @Headers({"url_name:kline"})
     @GET("https://kline.zbg.com/api/data/v1/ticker")
     Call<List<String>> getTicker(@Query("marketName") String symbol);
 
@@ -39,6 +42,7 @@ public interface MarketApi {
      *
      * @param isUseMarketName 是否返回交易对名称
      */
+    @Headers({"url_name:kline"})
     @GET("https://kline.zbg.com/api/data/v1/tickers")
     Call<Map<String, List<String>>> getTickers(@Query("isUseMarketName") boolean isUseMarketName);
 
@@ -48,6 +52,7 @@ public interface MarketApi {
      * @param symbol   交易对名称
      * @param dataSize 返回数据条数，默认80，最多为1000
      */
+    @Headers({"url_name:kline"})
     @GET("https://kline.zbg.com/api/data/v1/trades")
     Call<List<List<String>>> getTrades(@Query("marketName") String symbol, @Query("dataSize") Integer dataSize);
 
@@ -57,8 +62,9 @@ public interface MarketApi {
      * @param symbol   交易对名称
      * @param dataSize 档位数，表示买卖各5档，最大为100
      */
+    @Headers({"url_name:kline"})
     @GET("https://kline.zbg.com/api/data/v1/entrusts")
-    Call<Map<String, Object>> getOrders(@Query("marketName") String symbol, @Query("dataSize") Integer dataSize);
+    Call<Map<String, Object>> getPriceDepth(@Query("marketName") String symbol, @Query("dataSize") Integer dataSize);
 
     /**
      * 查询交易对的近80历史成交记录

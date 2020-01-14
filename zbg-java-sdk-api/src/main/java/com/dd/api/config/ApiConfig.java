@@ -28,6 +28,8 @@ public class ApiConfig {
      */
     private String endpoint = ApiConstants.DEFAULT_ENDPOINT;
 
+    private String klineEndpoint = ApiConstants.DEFAULT_KLINE_ENDPOINT;
+
     /**
      * Host connection timeout.
      */
@@ -67,11 +69,12 @@ public class ApiConfig {
         this.print = false;
     }
 
-    public ApiConfig(String apiKey, String secretKey, String passphrase, String endpoint, long connectTimeout, long readTimeout, long writeTimeout, boolean retryOnConnectionFailure, boolean print) {
+    public ApiConfig(String apiKey, String secretKey, String passphrase, String endpoint, String klineEndpoint, long connectTimeout, long readTimeout, long writeTimeout, boolean retryOnConnectionFailure, boolean print) {
         this.apiKey = apiKey;
         this.secretKey = secretKey;
         this.passphrase = passphrase;
         this.endpoint = endpoint;
+        this.klineEndpoint = klineEndpoint;
         this.connectTimeout = connectTimeout;
         this.readTimeout = readTimeout;
         this.writeTimeout = writeTimeout;
@@ -88,6 +91,7 @@ public class ApiConfig {
         private String secretKey;
         private String passphrase;
         private String endpoint = ApiConstants.DEFAULT_ENDPOINT;
+        private String klineEndpoint = ApiConstants.DEFAULT_KLINE_ENDPOINT;
         private long connectTimeout = ApiConstants.TIMEOUT;
         private long readTimeout = ApiConstants.TIMEOUT;
         private long writeTimeout = ApiConstants.TIMEOUT;
@@ -117,6 +121,11 @@ public class ApiConfig {
             return this;
         }
 
+        public ApiConfig.ApiConfigBuilder klineEndpoint(String klineEndpoint) {
+            this.klineEndpoint = klineEndpoint;
+            return this;
+        }
+
         public ApiConfig.ApiConfigBuilder connectTimeout(long connectTimeout) {
             this.connectTimeout = connectTimeout;
             return this;
@@ -143,12 +152,22 @@ public class ApiConfig {
         }
 
         public ApiConfig build() {
-            return new ApiConfig(this.apiKey, this.secretKey, this.passphrase, this.endpoint, this.connectTimeout, this.readTimeout, this.writeTimeout, this.retryOnConnectionFailure, this.print);
+            return new ApiConfig(this.apiKey, this.secretKey, this.passphrase, this.endpoint, this.klineEndpoint,
+                    this.connectTimeout, this.readTimeout, this.writeTimeout, this.retryOnConnectionFailure, this.print);
         }
 
         @Override
         public String toString() {
-            return "ApiConfig.ApiConfigBuilder(apiKey=" + this.apiKey + ", secretKey=" + this.secretKey + ", passphrase=" + this.passphrase + ", endpoint=" + this.endpoint + ", connectTimeout=" + this.connectTimeout + ", readTimeout=" + this.readTimeout + ", writeTimeout=" + this.writeTimeout + ", retryOnConnectionFailure=" + this.retryOnConnectionFailure + ", print=" + this.print + ")";
+            return "ApiConfig.ApiConfigBuilder(apiKey=" + this.apiKey +
+                    ", secretKey=" + this.secretKey +
+                    ", passphrase=" + this.passphrase +
+                    ", endpoint=" + this.endpoint +
+                    ", klineEndpoint=" + this.klineEndpoint +
+                    ", connectTimeout=" + this.connectTimeout +
+                    ", readTimeout=" + this.readTimeout +
+                    ", writeTimeout=" + this.writeTimeout +
+                    ", retryOnConnectionFailure=" + this.retryOnConnectionFailure +
+                    ", print=" + this.print + ")";
         }
     }
 }

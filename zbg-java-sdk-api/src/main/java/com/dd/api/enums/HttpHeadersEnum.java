@@ -21,8 +21,9 @@ public enum HttpHeadersEnum {
 
     CONTENT_TYPE("Content-Type"),
 
-    CLIENT_TYPE("Clienttype");
+    CLIENT_TYPE("Clienttype"),
 
+    HEADER_KEY("url_name");
 
     private String header;
 

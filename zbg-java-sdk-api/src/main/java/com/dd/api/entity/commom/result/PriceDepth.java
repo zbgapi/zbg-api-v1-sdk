@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * @author zhangzp
  */
 @Data
-public class Order {
+public class PriceDepth {
     /**
      * 成交时间戳，秒级别
      */
@@ -20,18 +20,18 @@ public class Order {
     /**
      * 卖盘列表 按价格倒序
      */
-    private List<OrderItem> asks;
+    private List<DepthEntry> asks;
 
     /**
      * 买盘列表， 按价格倒序
      */
-    private List<OrderItem> bids;
+    private List<DepthEntry> bids;
 
     public Date getTime() {
         return new Date(this.timestamp * 1000);
     }
 
-    public List<OrderItem> getAsks(boolean isDesc) {
+    public List<DepthEntry> getAsks(boolean isDesc) {
         if (isDesc) {
             return asks;
         }
@@ -39,7 +39,7 @@ public class Order {
         return asks.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
     }
 
-    public List<OrderItem> getBids(boolean isDesc) {
+    public List<DepthEntry> getBids(boolean isDesc) {
         if (isDesc) {
             return bids;
         }

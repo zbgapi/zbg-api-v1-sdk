@@ -9,7 +9,11 @@ public interface ApiConstants {
     /**
      * zbg 默认访问域名
      */
-    String DEFAULT_ENDPOINT = "https://www.zbg.com";
+    String DEFAULT_ENDPOINT = "https://www.zbgpro.net";
+    /**
+     * zbg K线 默认访问域名
+     */
+    String DEFAULT_KLINE_ENDPOINT = "https://kline.zbgpro.net";
 
     /**
      * The default timeout is 30 seconds.

@@ -9,7 +9,7 @@ import java.util.List;
  * @author zhangzp
  */
 @Data
-public class OrderItem implements Comparable<OrderItem> {
+public class DepthEntry implements Comparable<DepthEntry> {
     /**
      * 订单价格
      */
@@ -19,15 +19,15 @@ public class OrderItem implements Comparable<OrderItem> {
      */
     private BigDecimal amount;
 
-    public static OrderItem valueOf(List<String> list) {
-        OrderItem item = new OrderItem();
+    public static DepthEntry valueOf(List<String> list) {
+        DepthEntry item = new DepthEntry();
         item.setPrice(new BigDecimal(list.get(0)));
         item.setAmount(new BigDecimal(list.get(1)));
         return item;
     }
 
     @Override
-    public int compareTo(OrderItem o) {
+    public int compareTo(DepthEntry o) {
         return this.price.compareTo(o.getPrice());
     }
 }

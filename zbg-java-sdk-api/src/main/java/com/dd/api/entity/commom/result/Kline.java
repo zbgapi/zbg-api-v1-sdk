@@ -17,9 +17,9 @@ public class Kline {
      */
     private String symbol;
     /**
-     * 时间戳，秒
+     * 时间戳，秒，并以此作为此K线柱的id
      */
-    private int timestamp;
+    private int id;
     /**
      * 开盘价
      */
@@ -60,7 +60,7 @@ public class Kline {
     public static Kline valueOf(List<String> list) {
         Kline kline = new Kline();
         kline.setSymbol(list.get(2));
-        kline.setTimestamp(Integer.valueOf(list.get(3)));
+        kline.setId(Integer.valueOf(list.get(3)));
         kline.setOpen(new BigDecimal(list.get(4)));
         kline.setHigh(new BigDecimal(list.get(5)));
         kline.setLow(new BigDecimal(list.get(6)));
@@ -79,6 +79,6 @@ public class Kline {
      * @return k 线的统计时间
      */
     public Date getTime() {
-        return new Date(this.timestamp * 1000);
+        return new Date(this.getId() * 1000);
     }
 }

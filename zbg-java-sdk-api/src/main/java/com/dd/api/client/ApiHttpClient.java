@@ -10,10 +10,7 @@ import com.dd.api.utils.DigestKit;
 import com.dd.api.utils.StringKit;
 import com.dd.api.utils.TimeFormat;
 import com.dd.api.utils.TimeKit;
-import okhttp3.Headers;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
+import okhttp3.*;
 import okio.Buffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -48,10 +46,33 @@ public class ApiHttpClient {
                 .retryOnConnectionFailure(this.config.isRetryOnConnectionFailure())
                 .addInterceptor(chain -> {
                     long timestamp = System.currentTimeMillis();
-                    Request request = chain.request().newBuilder()
-                            .headers(this.header(chain.request(), timestamp))
-                            .build();
+                    Request oldRequest = chain.request();
+                    Request.Builder requestBuilder = oldRequest.newBuilder();
 
+                    List<String> headerValues = oldRequest.headers(HttpHeadersEnum.HEADER_KEY.header());
+                    if (headerValues != null && headerValues.size() > 0) {
+                        requestBuilder.removeHeader(HttpHeadersEnum.HEADER_KEY.header());
+                        //匹配获得新的BaseUrl
+                        String headerValue = headerValues.get(0);
+                        if ("kline".equals(headerValue)) {
+                            HttpUrl newBaseUrl = HttpUrl.parse(this.config.getKlineEndpoint());
+                            if (newBaseUrl != null) {
+                                //从request中获取原有的HttpUrl实例oldHttpUrl
+                                HttpUrl oldHttpUrl = oldRequest.url();
+                                //重建新的HttpUrl，修改需要修改的url部分
+                                HttpUrl newFullUrl = oldHttpUrl
+                                        .newBuilder()
+                                        .scheme(newBaseUrl.scheme())
+                                        .host(newBaseUrl.host())
+                                        .port(newBaseUrl.port())
+                                        .build();
+
+                                requestBuilder.url(newFullUrl);
+                            }
+                        }
+                    }
+
+                    Request request = requestBuilder.headers(this.header(chain.request(), timestamp)).build();
                     if (this.config.isPrint()) {
                         this.printRequest(request, timestamp);
                     }

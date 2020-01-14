@@ -18,7 +18,7 @@ public class MarketApiServiceTest {
     @Before
     public void setUp() throws Exception {
         ApiConfig config = ApiConfig.builder()
-                .endpoint("https://www.zbg.com")
+                .endpoint("https://www.zbgpro.net")
                 .print(true)
                 .build();
         this.marketApiService = new MarketApiServiceImpl(config);
@@ -52,7 +52,7 @@ public class MarketApiServiceTest {
 
     @Test
     public void getOrders() {
-        Order result = this.marketApiService.getOrders("btc_usdt", 4);
+        PriceDepth result = this.marketApiService.getPriceDepth("btc_usdt", 4);
         System.out.println(result);
         System.out.println(result.getAsks());
         System.out.println(result.getAsks(false));

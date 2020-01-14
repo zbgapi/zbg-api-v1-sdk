@@ -46,7 +46,7 @@ public interface MarketApiService {
      * @param symbol   交易对名称
      * @param dataSize 档位数，表示买卖各5档，最大为100
      */
-    Order getOrders(String symbol, Integer dataSize);
+    PriceDepth getPriceDepth(String symbol, Integer dataSize);
 
     /**
      * 查询交易对的近80历史成交记录

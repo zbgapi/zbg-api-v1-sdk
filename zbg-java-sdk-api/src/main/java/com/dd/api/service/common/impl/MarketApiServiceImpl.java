@@ -68,17 +68,17 @@ public class MarketApiServiceImpl implements MarketApiService {
 
     @Override
     @SuppressWarnings("unchecked")
-    public Order getOrders(@NonNull String symbol, Integer dataSize) {
-        Map<String, Object> dataMap = this.client.executeSync(this.api.getOrders(symbol, dataSize));
+    public PriceDepth getPriceDepth(@NonNull String symbol, Integer dataSize) {
+        Map<String, Object> dataMap = this.client.executeSync(this.api.getPriceDepth(symbol, dataSize));
         Integer timestamp = Integer.valueOf(dataMap.get("timestamp").toString());
         List<List<String>> asks = (List<List<String>>) dataMap.get("asks");
         List<List<String>> bids = (List<List<String>>) dataMap.get("bids");
 
-        Order order = new Order();
-        order.setTimestamp(timestamp);
-        order.setAsks(asks.stream().map(OrderItem::valueOf).collect(Collectors.toList()));
-        order.setBids(bids.stream().map(OrderItem::valueOf).collect(Collectors.toList()));
-        return order;
+        PriceDepth priceDepth = new PriceDepth();
+        priceDepth.setTimestamp(timestamp);
+        priceDepth.setAsks(asks.stream().map(DepthEntry::valueOf).collect(Collectors.toList()));
+        priceDepth.setBids(bids.stream().map(DepthEntry::valueOf).collect(Collectors.toList()));
+        return priceDepth;
     }
 
     @Override
