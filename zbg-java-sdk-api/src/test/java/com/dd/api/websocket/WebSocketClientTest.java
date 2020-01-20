@@ -51,8 +51,8 @@ public class WebSocketClientTest {
 
     @Test
     public void subscribeKline() {
-        String topic = SocketTopicEnum.KLINE.format(336, TimeRangeEnum.ONE_DAY.getTimeRange(), "zt_usdt");
-        this.webSocketClient.subscribe(topic, 1);
+        String topic = SocketTopicEnum.KLINE.format(336, TimeRangeEnum.ONE_MINUTE.getTimeRange(), "zt_usdt");
+        this.webSocketClient.subscribe(topic, 10);
         //为保证测试方法不停，需要让线程延迟
         try {
             Thread.sleep(100000);

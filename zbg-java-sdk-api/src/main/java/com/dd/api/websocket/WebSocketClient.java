@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Log
 public class WebSocketClient implements com.dd.api.websocket.WebSocket {
-    private String url = "wss:/kline.zbg.com/websocket";
+    private String url = "wss:/kline.zbgpro.net/websocket";
 
     private WebSocket webSocket = null;
     private WebSocketListener listener;
