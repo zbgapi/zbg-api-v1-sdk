@@ -38,7 +38,7 @@ public class WebSocketListener {
     /**
      * Called when a pong frame is received.
      *
-     * @param ws The WebSocket instance this event is occuring on.
+     * @param webSocket The WebSocket instance this event is occuring on.
      **/
     public void onPong(WebSocket webSocket) {
     }

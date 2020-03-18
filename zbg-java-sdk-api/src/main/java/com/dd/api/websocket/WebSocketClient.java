@@ -1,6 +1,7 @@
 package com.dd.api.websocket;
 
-import lombok.extern.java.Log;
+import com.dd.api.constant.ApiConstants;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -13,9 +14,9 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author zhangzp
  */
-@Log
+@Slf4j
 public class WebSocketClient implements com.dd.api.websocket.WebSocket {
-    private String url = "wss:/kline.zbgpro.net/websocket";
+    private String url = ApiConstants.DEFAULT_WS_ENDPOINT;
 
     private WebSocket webSocket = null;
     private WebSocketListener listener;
@@ -50,7 +51,6 @@ public class WebSocketClient implements com.dd.api.websocket.WebSocket {
         }
     }
 
-
     public void send(String msg) {
         this.webSocket.send(msg);
     }
@@ -62,7 +62,8 @@ public class WebSocketClient implements com.dd.api.websocket.WebSocket {
 
     @Override
     public void close() {
-        this.webSocket.close(200, "User exist");
+        log.info("[Sub] Close by user .");
+        this.webSocket.close(3000, "User exist");
     }
 
     @Override
@@ -73,17 +74,17 @@ public class WebSocketClient implements com.dd.api.websocket.WebSocket {
 
     @Override
     public void subscribe(String topic, int size) {
-        String msg = String.format("{\"action\":\"ADD\", \"dataType\":%s, \"dataSize\":%d}", topic, size);
+        String msg = String.format("{\"action\":\"ADD\", \"dataType\":\"%s\", \"dataSize\":%d}", topic, size);
 
-        log.info("Subscribe topic : " + msg);
+        log.info("[Sub] Subscribe topic : " + msg);
 
         this.send(msg);
     }
 
     @Override
     public void unsubscribe(String topic) {
-        String msg = String.format("{\"action\":\"DEL\", \"dataType\":%s}", topic);
-        log.info("Unsubscribe topic : " + msg);
+        String msg = String.format("{\"action\":\"DEL\", \"dataType\":\"%s\"}", topic);
+        log.info("[Sub] Unsubscribe topic : " + msg);
 
         this.send(msg);
     }
@@ -104,6 +105,7 @@ public class WebSocketClient implements com.dd.api.websocket.WebSocket {
 
         @Override
         public void onMessage(WebSocket webSocket, String text) {
+            log.debug("[Sub] Receive data message :" + text);
             if (text != null && text.contains("\"action\":\"PING\"")) {
                 this.listener.onPong(socket);
             } else {
@@ -128,6 +130,8 @@ public class WebSocketClient implements com.dd.api.websocket.WebSocket {
 
         @Override
         public void onFailure(WebSocket webSocket, Throwable t, Response response) {
+            log.debug("[Sub] WebSocket throw an error :", t);
+
             this.listener.onFailure(socket, t);
         }
     }

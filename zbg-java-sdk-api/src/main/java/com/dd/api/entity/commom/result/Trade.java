@@ -1,6 +1,7 @@
 package com.dd.api.entity.commom.result;
 
 import com.dd.api.enums.OrderSideEnum;
+import com.google.gson.JsonArray;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -35,13 +36,23 @@ public class Trade {
     private BigDecimal volume;
 
     public static Trade valueOf(List<String> e) {
-        Trade ticker = new Trade();
-        ticker.setTimestamp(Integer.valueOf(e.get(2)));
-        ticker.setSymbol(e.get(3).toLowerCase());
-        ticker.setSide("bid".equalsIgnoreCase(e.get(4)) ? OrderSideEnum.buy : OrderSideEnum.sell);
-        ticker.setPrice(new BigDecimal(e.get(5)));
-        ticker.setVolume(new BigDecimal(e.get(6)));
-        return ticker;
+        Trade trade = new Trade();
+        trade.setTimestamp(Integer.valueOf(e.get(2)));
+        trade.setSymbol(e.get(3).toLowerCase());
+        trade.setSide("bid".equalsIgnoreCase(e.get(4)) ? OrderSideEnum.buy : OrderSideEnum.sell);
+        trade.setPrice(new BigDecimal(e.get(5)));
+        trade.setVolume(new BigDecimal(e.get(6)));
+        return trade;
+    }
+
+    public static Trade valueOf(JsonArray e) {
+        Trade trade = new Trade();
+        trade.setTimestamp(e.get(2).getAsInt());
+        trade.setSymbol(e.get(3).getAsString().toLowerCase());
+        trade.setSide("bid".equalsIgnoreCase(e.get(4).getAsString()) ? OrderSideEnum.buy : OrderSideEnum.sell);
+        trade.setPrice(e.get(5).getAsBigDecimal());
+        trade.setVolume(e.get(6).getAsBigDecimal());
+        return trade;
     }
 
     public Date getTime() {

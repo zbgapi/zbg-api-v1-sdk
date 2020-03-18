@@ -54,7 +54,7 @@ public class MarketApiServiceTest {
     public void getOrders() {
         PriceDepth result = this.marketApiService.getPriceDepth("btc_usdt", 4);
         System.out.println(result);
-        System.out.println(result.getAsks());
+        System.out.println(result.getAsks(true));
         System.out.println(result.getAsks(false));
     }
 

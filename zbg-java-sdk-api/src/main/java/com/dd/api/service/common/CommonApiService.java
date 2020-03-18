@@ -27,6 +27,14 @@ public interface CommonApiService {
     List<Symbol> getSymbols();
 
     /**
+     * 根据交易对名称获取交易对
+     *
+     * @param name 交易对名称，忽略大小写
+     * @return 交易对对象
+     */
+    Symbol getSymbol(String name);
+
+    /**
      * 获取服务器的时间
      *
      * @return 服务器的时间

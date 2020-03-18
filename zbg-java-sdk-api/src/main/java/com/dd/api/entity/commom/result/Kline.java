@@ -1,6 +1,7 @@
 package com.dd.api.entity.commom.result;
 
 import com.dd.api.enums.TimeRangeEnum;
+import com.google.gson.JsonArray;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -70,6 +71,22 @@ public class Kline {
         kline.setLocalCoinRate(new BigDecimal(list.get(10)));
         kline.setTimeRange(TimeRangeEnum.timeRange(list.get(11)));
         kline.setAmount(new BigDecimal(list.get(13)));
+        return kline;
+    }
+
+    public static Kline valueOf(JsonArray list) {
+        Kline kline = new Kline();
+        kline.setSymbol(list.get(2).getAsString());
+        kline.setId(list.get(3).getAsInt());
+        kline.setOpen(list.get(4).getAsBigDecimal());
+        kline.setHigh(new BigDecimal(list.get(5).getAsString()));
+        kline.setLow(new BigDecimal(list.get(6).getAsString()));
+        kline.setClose(new BigDecimal(list.get(7).getAsString()));
+        kline.setVolume(new BigDecimal(list.get(8).getAsString()));
+        kline.setRiseRate(new BigDecimal(list.get(9).getAsString()));
+        kline.setLocalCoinRate(new BigDecimal(list.get(10).getAsString()));
+        kline.setTimeRange(TimeRangeEnum.timeRange(list.get(11).getAsString()));
+        kline.setAmount(new BigDecimal(list.get(13).getAsString()));
         return kline;
     }
 

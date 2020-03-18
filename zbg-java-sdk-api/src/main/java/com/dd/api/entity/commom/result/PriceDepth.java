@@ -1,6 +1,7 @@
 package com.dd.api.entity.commom.result;
 
-import lombok.Data;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -10,12 +11,17 @@ import java.util.stream.Collectors;
 /**
  * @author zhangzp
  */
-@Data
+@Setter
+@ToString
 public class PriceDepth {
     /**
      * 成交时间戳，秒级别
      */
-    private int timestamp;
+    private long timestamp;
+    /**
+     * 交易对
+     */
+    private String symbol;
 
     /**
      * 卖盘列表 按价格倒序
@@ -45,5 +51,13 @@ public class PriceDepth {
         }
 
         return bids.stream().sorted(Comparator.naturalOrder()).collect(Collectors.toList());
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 }

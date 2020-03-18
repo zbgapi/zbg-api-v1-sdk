@@ -14,6 +14,10 @@ public interface ApiConstants {
      * zbg K线 默认访问域名
      */
     String DEFAULT_KLINE_ENDPOINT = "https://kline.zbgpro.net";
+    /**
+     * zbg 默认 ws 地址
+     */
+    String DEFAULT_WS_ENDPOINT = "wss:/kline.zbgpro.net/websocket";
 
     /**
      * The default timeout is 30 seconds.

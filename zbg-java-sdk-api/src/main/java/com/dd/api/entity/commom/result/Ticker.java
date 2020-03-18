@@ -1,5 +1,6 @@
 package com.dd.api.entity.commom.result;
 
+import com.google.gson.JsonArray;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -10,6 +11,11 @@ import java.util.List;
  */
 @Data
 public class Ticker {
+    /**
+     * 交易对名称
+     */
+    private Integer symbolId;
+
     /**
      * 交易对名称
      */
@@ -57,6 +63,20 @@ public class Ticker {
         ticker.setBid(new BigDecimal(datas.get(7)));
         ticker.setAsk(new BigDecimal(datas.get(8)));
         ticker.setAmount(new BigDecimal(datas.get(9)));
+        return ticker;
+    }
+
+    public static Ticker valueOf(JsonArray datas) {
+        Ticker ticker = new Ticker();
+        ticker.setSymbolId(datas.get(0).getAsInt());
+        ticker.setClose(datas.get(1).getAsBigDecimal());
+        ticker.setHigh(datas.get(2).getAsBigDecimal());
+        ticker.setLow(datas.get(3).getAsBigDecimal());
+        ticker.setVolume(datas.get(4).getAsBigDecimal());
+        ticker.setChange(datas.get(5).getAsBigDecimal());
+        ticker.setBid(datas.get(7).getAsBigDecimal());
+        ticker.setAsk(datas.get(8).getAsBigDecimal());
+        ticker.setAmount(datas.get(9).getAsBigDecimal());
         return ticker;
     }
 }

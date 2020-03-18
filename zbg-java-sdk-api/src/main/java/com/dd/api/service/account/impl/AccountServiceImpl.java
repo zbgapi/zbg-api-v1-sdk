@@ -11,6 +11,7 @@ import com.dd.api.entity.account.result.Wallet;
 import com.dd.api.entity.commom.Page;
 import com.dd.api.enums.TransferTypeEnum;
 import com.dd.api.service.account.AccountService;
+import com.dd.api.service.common.impl.CommonApiServiceImpl;
 import lombok.NonNull;
 import retrofit2.Call;
 import retrofit2.Callback;

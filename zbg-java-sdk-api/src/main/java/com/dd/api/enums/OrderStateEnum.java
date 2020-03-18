@@ -34,7 +34,13 @@ public enum OrderStateEnum {
      * 已创建（入库）
      */
     @SerializedName("created")
-    created("created"),;
+    created("created"),
+
+    /**
+     * 未知
+     */
+    @SerializedName("unknown")
+    unknown("unknown");
 
 
     private String state;

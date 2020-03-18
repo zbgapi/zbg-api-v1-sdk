@@ -35,6 +35,7 @@ public class OrderApiServiceTest {
                 .build();
         this.orderApiService = new OrderApiServiceImpl(config);
     }
+
     @Test
     public void addOrder() {
         AddOrderParam param = AddOrderParam.builder()

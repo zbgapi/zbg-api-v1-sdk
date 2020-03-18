@@ -33,7 +33,7 @@ public class ApiException extends RuntimeException {
     @Override
     public String getMessage() {
         if (this.code != null) {
-            return this.code + " : " + super.getMessage();
+            return "[" +this.code + "]: " + super.getMessage();
         }
         return super.getMessage();
     }
