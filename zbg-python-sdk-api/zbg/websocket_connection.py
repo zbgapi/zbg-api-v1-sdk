@@ -97,7 +97,7 @@ class WebsocketConnection:
     def re_connect(self):
         if self.delay_in_second != 0:
             self.delay_in_second -= 1
-            self.logger.warning("In delay connection: " + str(self.delay_in_second))
+            self.logger.warning("[Sub][" + str(self.id) + "] In delay connection: " + str(self.delay_in_second))
         else:
             self.connect()
 
@@ -170,12 +170,12 @@ class WebsocketConnection:
             if self.request.json_parser is not None:
                 res = self.request.json_parser(json_wrapper)
         except Exception as e:
-            self.logger.error("Failed to parse server's response", e)
+            self.logger.error("[Sub][" + str(self.id) + "] Failed to parse server's response", e)
             self.on_error("Failed to parse server's response: " + str(e))
 
         try:
             if self.request.update_callback is not None:
                 self.request.update_callback(res)
         except Exception as e:
-            self.logger.error("Failed to call the callback method", e)
+            self.logger.error("[Sub][" + str(self.id) + "] Failed to call the callback method", e)
             self.on_error("Process error: " + str(e) + " You should capture the exception in your error handler")

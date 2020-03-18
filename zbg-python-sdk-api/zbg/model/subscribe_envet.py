@@ -57,12 +57,8 @@ class TickerEvent(ResultModel):
     def json_parse(data):
         data = data['trade_statistic']
         obj = TickerEvent()
-        if isinstance(data[0], list):
-            obj.data_size = len(data)
-            obj.data = [Ticker.json_parse(item) for item in data]
-        else:
-            obj.data = [Ticker.json_parse(data)]
-            obj.data_size = 1
+        obj.data_size = len(data)
+        obj.data = [Ticker.json_parse(item) for item in data]
 
         return obj
 

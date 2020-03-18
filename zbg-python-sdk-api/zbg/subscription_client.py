@@ -102,7 +102,7 @@ class SubscriptionClient(object):
             example: def error_handler(exception: ZbgApiException)
                         pass
         :param init_data_size: The number of data returned the first time.
-        :return: No return
+        :return: id
         """
         market = self.account.check_symbol(symbol=symbol)
         topic = SubscribeTopic.CANDLESTICK.value.format(market['id'], interval.value, symbol.upper())
@@ -138,18 +138,23 @@ class SubscriptionClient(object):
             example: def error_handler(exception: ZbgApiException)
                         pass
         :param init_data_size: The number of data returned the first time.
-        :return: No return
+        :return: id
         """
         market = self.account.check_symbol(symbol)
+        topic = SubscribeTopic.TRADE.value.format(market['id'], symbol.upper())
 
         def subscription_handler(connection):
-            connection.send(self.subscribe_message_pattern.format('_'.join([market['id'], 'TRADE', symbol.upper()]), init_data_size))
+            connection.send(self.subscribe_message_pattern.format(topic, init_data_size))
+
+        def unsubscription_handler(connection):
+            connection.send(self.unsubscribe_message_pattern.format(topic))
 
         def json_parse(json_wrapper):
             return TradeEvent.json_parse(json_wrapper)
 
         request = WebsocketRequest()
         request.subscription_handler = subscription_handler
+        request.unsubscription_handler = unsubscription_handler
         request.json_parser = json_parse
         request.update_callback = callback
         request.error_handler = error_handler
@@ -166,7 +171,7 @@ class SubscriptionClient(object):
         :param error_handler: The error handler will be called if subscription failed or error happen between client and Huobi server
             example: def error_handler(exception: ZbgApiException)
                         pass
-        :return: No return
+        :return: id
         """
         if symbol.upper() == 'ALL':
             symbol_id = 'ALL'
@@ -174,9 +179,14 @@ class SubscriptionClient(object):
             market = self.account.check_symbol(symbol)
             symbol_id = market['id']
 
+        topic = SubscribeTopic.TICKER.value.format(symbol_id)
+
         def subscription_handler(connection):
             # ALL_TRADE_STATISTIC_24H , 5140_TRADE_STATISTIC_24H
-            connection.send(self.subscribe_message_pattern.format('_'.join([symbol_id, 'TRADE_STATISTIC_24H']), 1))
+            connection.send(self.subscribe_message_pattern.format(topic, 1))
+
+        def unsubscription_handler(connection):
+            connection.send(self.unsubscribe_message_pattern.format(topic))
 
         def json_parse(json_wrapper):
             ticker_event_obj = TickerEvent.json_parse(json_wrapper)
@@ -195,6 +205,7 @@ class SubscriptionClient(object):
 
         request = WebsocketRequest()
         request.subscription_handler = subscription_handler
+        request.unsubscription_handler = unsubscription_handler
         request.json_parser = json_parse
         request.update_callback = callback
         request.error_handler = error_handler
@@ -211,18 +222,23 @@ class SubscriptionClient(object):
         :param error_handler: The error handler will be called if subscription failed or error happen between client and Huobi server
             example: def error_handler(exception: ZbgApiException)
                         pass
-        :return: No return
+        :return: id
         """
         market = self.account.check_symbol(symbol)
+        topic = SubscribeTopic.PRICE_DEPTH.value.format(market['id'], symbol.upper())
 
         def subscription_handler(connection):
-            connection.send(self.subscribe_message_pattern.format('_'.join([market['id'], 'ENTRUST_ADD', symbol.upper()]), 1))
+            connection.send(self.subscribe_message_pattern.format(topic, 1))
+
+        def unsubscription_handler(connection):
+            connection.send(self.unsubscribe_message_pattern.format(topic))
 
         def json_parse(json_wrapper):
             return PriceDepthEvent.json_parse(json_wrapper)
 
         request = WebsocketRequest()
         request.subscription_handler = subscription_handler
+        request.unsubscription_handler = unsubscription_handler
         request.json_parser = json_parse
         request.update_callback = callback
         request.error_handler = error_handler
@@ -240,22 +256,26 @@ class SubscriptionClient(object):
             example: def error_handler(exception: ZbgApiException)
                         pass
         :param init_data_size: The number of data returned the first time.
-        :return: No return
+        :return: id
         """
         market = self.account.check_symbol(symbol)
         symbol_id = market['id']
 
         account_id = self.account.get_account().user_id
+        topic = SubscribeTopic.ORDER_CHANGE.value.format(symbol_id, account_id, symbol.upper())
 
         def subscription_handler(connection):
-            # ALL_TRADE_STATISTIC_24H , 5140_TRADE_STATISTIC_24H
-            connection.send(self.subscribe_message_pattern.format('_'.join([symbol_id, 'RECORD_ADD', account_id, symbol.upper()]), init_data_size))
+            connection.send(self.subscribe_message_pattern.format(topic, init_data_size))
+
+        def unsubscription_handler(connection):
+            connection.send(self.unsubscribe_message_pattern.format(topic))
 
         def json_parse(json_wrapper):
             return OrderChangeEvent.json_parse(json_wrapper)
 
         request = WebsocketRequest()
         request.subscription_handler = subscription_handler
+        request.unsubscription_handler = unsubscription_handler
         request.json_parser = json_parse
         request.update_callback = callback
         request.error_handler = error_handler
