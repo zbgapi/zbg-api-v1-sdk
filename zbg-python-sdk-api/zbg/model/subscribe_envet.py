@@ -9,7 +9,7 @@ class CandlestickEvent(ResultModel):
         super().__init__()
         self.data_type = "K"
         self.data_size = 0
-        self.interval = CandlestickInterval.INVALID
+        self.interval = None
         self.data = []
 
     @staticmethod

@@ -9,7 +9,6 @@ class CandlestickInterval(Enum):
     MIN60 = "1H"
     DAY1 = "1D"
     WEEK1 = "1W"
-    INVALID = None
 
 
 class OrderSide(Enum):

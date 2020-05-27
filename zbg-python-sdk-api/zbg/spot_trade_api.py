@@ -184,10 +184,10 @@ class SpotTradeApi(ApiClient):
             'size': size,
         }
 
-        if order_side:
+        if order_side and order_side.value:
             params['side'] = order_side.value
 
-        if order_state:
+        if order_state and order_state.value:
             params['state'] = order_state.value
 
         if start_date:
