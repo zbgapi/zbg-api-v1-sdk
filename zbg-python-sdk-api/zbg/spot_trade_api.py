@@ -8,7 +8,7 @@ from zbg.model.spot_trade import Trade
 
 class SpotTradeApi(ApiClient):
 
-    def __init__(self, api_key=None, secret_key=None, passphrase=None, api_host=None):
+    def __init__(self, api_key, secret_key, passphrase=None, api_host=None):
         describe = {
             'apis': {
                 'private': {

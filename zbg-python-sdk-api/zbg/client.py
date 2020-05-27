@@ -144,7 +144,7 @@ class ApiClient(object):
         if headers:
             self.extend(new_headers, headers)
 
-        if self.__passphrase:
+        if hasattr(self, "_ApiClient__passphrase"):
             new_headers['Passphrase'] = hashlib.md5((timestamp + self.__passphrase).encode('utf-8')).hexdigest()
 
         return new_headers

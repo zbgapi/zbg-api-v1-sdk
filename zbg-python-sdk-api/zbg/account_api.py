@@ -7,7 +7,7 @@ from zbg.model.constant import TransferType, Direct
 
 class AccountApi(ApiClient):
 
-    def __init__(self, api_key, secret_key, passphrase, api_host=None):
+    def __init__(self, api_key, secret_key, passphrase=None, api_host=None):
         describe = {
             'apis': {
                 'private': {
@@ -49,7 +49,7 @@ class AccountApi(ApiClient):
         """
         balances = self.private_get_balances()
 
-        return [Balance(**balance) for balance in balances if filter_zero and Utils.safe_float(balance, 'balance', 0.0) > 0]
+        return [Balance(**balance) for balance in balances if not filter_zero or Utils.safe_float(balance, 'balance', 0.0) > 0]
 
     def get_balance(self, currency: str) -> Balance:
         """
@@ -71,7 +71,7 @@ class AccountApi(ApiClient):
         """
         balances = self.private_get_aggregate_balance()
 
-        return [Balance(**balance) for balance in balances if filter_zero and Utils.safe_float(balance, 'balance', 0.0) > 0]
+        return [Balance(**balance) for balance in balances if not filter_zero or Utils.safe_float(balance, 'balance', 0.0) > 0]
 
     def get_sub_balance(self, sub_uid: str, filter_zero=False) -> BalanceList:
         """
@@ -83,7 +83,7 @@ class AccountApi(ApiClient):
 
         balances = self.private_get_sub_balance(params)
 
-        return [Balance(**balance) for balance in balances if filter_zero and Utils.safe_float(balance, 'balance', 0.0) > 0]
+        return [Balance(**balance) for balance in balances if not filter_zero or Utils.safe_float(balance, 'balance', 0.0) > 0]
 
     def transfer(self, sub_uid: str, currency: str, amount: float, transfer_type: TransferType):
         """
