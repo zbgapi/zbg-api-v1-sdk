@@ -34,9 +34,9 @@ class ApiClient(object):
 
     urls = {
         'logo': 'https://www.zbg.com/src/images/logo.png',
-        'api': 'https://www.zbgpro.net',
-        'market_api': 'https://kline.zbgpro.net',
-        'doc': 'https://www.zbgpro.net/docs/cn/api',
+        'api': 'https://www.zbg.live',
+        'market_api': 'https://kline.zbg.live',
+        'doc': 'https://zbgapi.github.io/docs/spot/v1/cn/#185368440e',
     }
     apis = {
         'public': {
