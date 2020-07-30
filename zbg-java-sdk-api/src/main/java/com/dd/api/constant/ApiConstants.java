@@ -9,15 +9,15 @@ public interface ApiConstants {
     /**
      * zbg 默认访问域名
      */
-    String DEFAULT_ENDPOINT = "https://www.zbgpro.net";
+    String DEFAULT_ENDPOINT = "https://www.zbg.live";
     /**
      * zbg K线 默认访问域名
      */
-    String DEFAULT_KLINE_ENDPOINT = "https://kline.zbgpro.net";
+    String DEFAULT_KLINE_ENDPOINT = "https://kline.zbg.live";
     /**
      * zbg 默认 ws 地址
      */
-    String DEFAULT_WS_ENDPOINT = "wss:/kline.zbgpro.net/websocket";
+    String DEFAULT_WS_ENDPOINT = "wss:/kline.zbg.live/websocket";
 
     /**
      * The default timeout is 30 seconds.
