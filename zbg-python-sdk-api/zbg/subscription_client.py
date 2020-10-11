@@ -54,7 +54,7 @@ class SubscriptionClient(object):
         self.__passphrase = passphrase
         self.connections = list()
 
-        self.url = 'wss://kline.zbg.live/websocket'
+        self.url = 'wss://kline.zbg.io/websocket'
         if 'url' in kwargs:
             self.url = kwargs["url"]
 
