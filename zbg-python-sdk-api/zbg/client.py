@@ -33,9 +33,9 @@ class ApiClient(object):
     currencies_by_name = None
 
     urls = {
-        'logo': 'https://www.zbg.com/src/images/logo.png',
-        'api': 'https://www.zbg.live',
-        'market_api': 'https://kline.zbg.live',
+        'logo': 'https://www.zbg.io/src/images/logo.png',
+        'api': 'https://www.zbg.io',
+        'market_api': 'https://kline.zbg.io',
         'doc': 'https://zbgapi.github.io/docs/spot/v1/cn/#185368440e',
     }
     apis = {
